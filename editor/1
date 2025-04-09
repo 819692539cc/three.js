@@ -1,0 +1,43 @@
+加载glTF底盘模型并添加交互
+从“three”导入*为THREE；
+从'three/examples/jsm/controls/OrbitControls'导入{OrbitControls}；
+从'three/examples/jsm/loaders/GLTFLoader'导入{GLTFLoader}；
+
+// 初始化场景
+Const scene=new THREE.Scene()；
+const camera=新的THREE.PerspectiveCamera(75，窗口内部宽度/窗口内部高度，0.1，1000)；
+Const renderer=new THREE.WebGLenderer({antialias:true})；
+renderer.setSize(window.innerWidth，window.innerHeight)；
+文件。身体。appendChild(渲染器.DOMElement)；
+
+// 添加灯光
+scene.add(新Three.AmbientLight(0xFFFFFF，0.5))；
+Const directionalLight=新的THREE.DirectionalLight(0xFFFFFF，1)；
+directionalLight.position.set(5，5，5)；
+scene.add(directionalLight)；
+
+// 加载底盘模型
+常量加载程序=新GLTFLoader()；
+loader.load('https://your-model-url/chassis.glb',(glTF)=>{
+scene.add(gltf.scene)；
+});
+
+// 手机触控交互
+常量控件=新的动态观察控件(摄影机、渲染器.domElement)；
+controls.enableZoom=true；
+controls.enablePan=false；
+
+// 自适应屏幕
+window.addEventListener('resize'，()=>{
+camera.aspect=window.innerWidth/window.innerHeight；
+camera.updateProjectionMatrix()；
+renderer.setSize(window.innerWidth，window.innerHeight)；
+});
+
+// 动画循环
+函数animate(){
+requestAnimationFrame(animate)；
+controls.update()；
+渲染器。渲染器(场景，摄影机)；
+}
+使有生气()；
